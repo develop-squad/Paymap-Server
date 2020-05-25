@@ -1,0 +1,32 @@
+﻿<Application x:Class="PAYMAP_BACKEND.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             DispatcherUnhandledException="OnUnhandledException"
+             Startup="OnStartup">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/steel.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Color x:Key="BootStrapPrimaryColor">#007BFF</Color>
+            <SolidColorBrush x:Key="BootStrapPrimaryBrush" Color="{DynamicResource BootStrapPrimaryColor}" />
+            <Color x:Key="BootStrapSuccessColor">#28A745</Color>
+            <SolidColorBrush x:Key="BootStrapSuccessBrush" Color="{DynamicResource BootStrapSuccessColor}" />
+            <Color x:Key="BootStrapDangerColor">#DC3545</Color>
+            <SolidColorBrush x:Key="BootStrapDangerBrush" Color="{DynamicResource BootStrapDangerColor}" />
+            <Color x:Key="BootStrapWarningColor">#FFC107</Color>
+            <SolidColorBrush x:Key="BootStrapWarningBrush" Color="{DynamicResource BootStrapWarningColor}" />
+            <Color x:Key="BootStrapInfoColor">#17A2B8</Color>
+            <SolidColorBrush x:Key="BootStrapInfoBrush" Color="{DynamicResource BootStrapInfoColor}" />
+            <Color x:Key="BootStrapDarkColor">#343A40</Color>
+            <SolidColorBrush x:Key="BootStrapDarkBrush" Color="{DynamicResource BootStrapDarkColor}" />
+            <Color x:Key="BootStrapLightColor">#F8F9FA</Color>
+            <SolidColorBrush x:Key="BootStrapLightBrush" Color="{DynamicResource BootStrapLightColor}" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

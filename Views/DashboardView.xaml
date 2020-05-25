@@ -1,0 +1,159 @@
+﻿<UserControl x:Class="PAYMAP_BACKEND.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid 
+        Width="Auto"
+        Height="Auto"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
+        <!-- 서버 현재 상태 -->
+        <!-- 서버 러닝타임 및 이벤트 누적값 -->
+        <!-- 서버 현재 리소스 그래프 -->
+        <!-- 서버 기본 제어 버튼 -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <StackPanel Name="DashboardHeaderPanel" Grid.Row="0" Grid.RowSpan="1" Orientation="Horizontal">
+            <Grid Width="{Binding ActualWidth, ElementName=DashboardHeaderPanel}" Background="{DynamicResource AccentColorBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="4 4 2 4" HorizontalAlignment="Stretch" Orientation="Vertical">
+                    <TextBlock x:Name="DashboardModuleNetwork" Foreground="White" FontSize="16" Text="NETWORK" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBlock x:Name="DashboardModuleNetworkStatus" Foreground="{StaticResource BootStrapDarkBrush}" Text="OFF" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="2 4 2 4" HorizontalAlignment="Stretch" Orientation="Vertical">
+                    <TextBlock x:Name="DashboardModuleDatabase" Foreground="White" FontSize="16" Text="DATABASE" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBlock x:Name="DashboardModuleDatabaseStatus" Foreground="{StaticResource BootStrapDarkBrush}" Text="OFF" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Margin="2 4 2 4" HorizontalAlignment="Stretch" Orientation="Vertical">
+                    <TextBlock x:Name="DashboardModuleServer" Foreground="White" FontSize="16" Text="SERVER" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBlock x:Name="DashboardModuleServerStatus" Foreground="{StaticResource BootStrapDarkBrush}" Text="OFF" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Column="3" Margin="2 4 2 4" HorizontalAlignment="Stretch" Orientation="Vertical">
+                    <TextBlock x:Name="DashboardModuleWindow" Foreground="White" FontSize="16" Text="WINDOW" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBlock x:Name="DashboardModuleWindowStatus" Foreground="{StaticResource BootStrapDarkBrush}" Text="OFF" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Column="4" Margin="2 4 2 4" HorizontalAlignment="Stretch" Orientation="Vertical">
+                    <TextBlock x:Name="DashboardModuleCommand" Foreground="White" FontSize="16" Text="COMMAND" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBlock x:Name="DashboardModuleCommandStatus" Foreground="{StaticResource BootStrapDarkBrush}" Text="OFF" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Column="5" Margin="2 4 4 4" HorizontalAlignment="Stretch" Orientation="Vertical">
+                    <TextBlock x:Name="DashboardModuleDEVX" Foreground="White" FontSize="16" Text="DEVX" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBlock x:Name="DashboardModuleDEVXStatus" Foreground="{StaticResource BootStrapDarkBrush}" Text="OFF" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <StackPanel Name="DashboardRuntimePanel" Grid.Row="1" Grid.RowSpan="1" Margin="4" Orientation="Horizontal">
+            <Grid Width="{Binding ActualWidth, ElementName=DashboardRuntimePanel}" Background="{StaticResource BootStrapLightBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" MinWidth="20" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="DashboardRuntimeText" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="20" Text="SERVER STATUS" TextAlignment="Left" VerticalAlignment="Top"/>
+                <TextBlock x:Name="DashboardRuntimeLive" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Margin="4" Foreground="{StaticResource BootStrapSuccessBrush}" FontSize="28" Text="0000:00:00" TextAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock x:Name="DashboardRuntimeTotal" Grid.Column="0" Grid.Row="3" Margin="4" Foreground="{StaticResource BootStrapInfoBrush}" FontSize="12" Text="0000:00:00" TextAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock x:Name="DashboardRuntimeError" Grid.Column="0" Grid.Row="4" Margin="4" Foreground="{StaticResource BootStrapDangerBrush}" FontSize="12" Text="0000:00:00" TextAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Margin="4" FontSize="12" Text="LOG COUNT" TextAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Grid.Row="1" Margin="4" Foreground="{StaticResource BootStrapInfoBrush}" FontSize="12" Text="INFO" TextAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Grid.Row="2" Margin="4" Foreground="{StaticResource BootStrapWarningBrush}" FontSize="12" Text="WARN" TextAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Grid.Row="3" Margin="4" Foreground="{StaticResource BootStrapDangerBrush}" FontSize="12" Text="ERROR" TextAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Grid.Row="4" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="12" Text="FATAL" TextAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock x:Name="DashboardRuntimeLog1" Grid.Column="2" Grid.Row="1" Margin="4" Foreground="{StaticResource BootStrapInfoBrush}" FontSize="12" Text="0" TextAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock x:Name="DashboardRuntimeLog2" Grid.Column="2" Grid.Row="2" Margin="4" Foreground="{StaticResource BootStrapWarningBrush}" FontSize="12" Text="0" TextAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock x:Name="DashboardRuntimeLog3" Grid.Column="2" Grid.Row="3" Margin="4" Foreground="{StaticResource BootStrapDangerBrush}" FontSize="12" Text="0" TextAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock x:Name="DashboardRuntimeLog4" Grid.Column="2" Grid.Row="4" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="12" Text="0" TextAlignment="Left" VerticalAlignment="Center"/>
+            </Grid>
+        </StackPanel>
+        <StackPanel Name="DashboardStatusPanel" Grid.Row="2" Grid.RowSpan="1" Orientation="Horizontal">
+            <Grid Width="{Binding ActualWidth, ElementName=DashboardStatusPanel}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Name="DashboardNetworkPanel" Grid.Column="0" Margin="4" Orientation="Horizontal">
+                    <Grid Width="{Binding ActualWidth, ElementName=DashboardNetworkPanel}" Background="{StaticResource BootStrapLightBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="20" Text="NETWORK STATUS" TextAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="12" Text="API COUNT" TextAlignment="Left" VerticalAlignment="Bottom"/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="12" Text="PER SECOND" TextAlignment="Left" VerticalAlignment="Bottom"/>
+                        <TextBlock x:Name="DashboardNetworkCount" Grid.Column="0" Grid.Row="2" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="28" Text="0" TextAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="DashboardNetworkPerSecond" Grid.Column="1" Grid.Row="2" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="16" Text="0.0000" TextAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Name="DashboardDatabasePanel" Grid.Column="1" Margin="4" Orientation="Horizontal">
+                    <Grid Width="{Binding ActualWidth, ElementName=DashboardDatabasePanel}" Background="{StaticResource BootStrapLightBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="20" Text="DATABASE STATUS" TextAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="12" Text="API COUNT" TextAlignment="Left" VerticalAlignment="Bottom"/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="12" Text="PER SECOND" TextAlignment="Left" VerticalAlignment="Bottom"/>
+                        <TextBlock x:Name="DashboardDatabaseCount" Grid.Column="0" Grid.Row="2" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="28" Text="0" TextAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="DashboardDatabasePerSecond" Grid.Column="1" Grid.Row="2" Margin="4" Foreground="{StaticResource BootStrapDarkBrush}" FontSize="16" Text="0.0000" TextAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <StackPanel Name="DashboardGraphPanel" Grid.Row="3" Grid.RowSpan="1" Orientation="Horizontal">
+            <Grid Width="{Binding ActualWidth, ElementName=DashboardGraphPanel}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <lvc:CartesianChart Name="DashboardGraphCPU" Grid.Column="0" Series="{Binding _dashboardResources}" LegendLocation="Bottom" >
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis MinValue="0" MaxValue="100" LabelFormatter="{Binding _dashboardChartCPUFormatter}"/>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Visibility="Collapsed"/>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+                <lvc:CartesianChart Name="DashboardGraphRAM" Grid.Column="1" Series="{Binding _dashboardResources}" LegendLocation="Bottom" >
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis MinValue="0" LabelFormatter="{Binding _dashboardChartRAMFormatter}"/>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Visibility="Collapsed"/>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

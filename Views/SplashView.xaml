@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="PAYMAP_BACKEND.Views.SplashView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignWidth="700"
+             d:DesignHeight="500">
+    <Grid 
+        Width="Auto"
+        Height="Auto"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <ToggleButton Name="SplashButton" Grid.Row="0" Width="60" Height="60" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+            <Image Width="48px" HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Resources/icon_connect_black.png"/>
+        </ToggleButton>
+        <TextBlock Name="SplashStatus" Grid.Row="1" FontSize="14px" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top" Text="CONNECT"/>
+        
+    </Grid>
+</UserControl>

@@ -1,0 +1,142 @@
+﻿<!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
+<controls:MetroWindow x:Class="PAYMAP_BACKEND.Views.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:views="clr-namespace:PAYMAP_BACKEND.Views"
+                      xmlns:utils="clr-namespace:PAYMAP_BACKEND.Utils"
+                      Title="PAYMAP SERVER"
+                      Icon="../Resources/icon_zeropay.ico"
+                      ShowIconOnTitleBar="False"
+                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      WindowStartupLocation="CenterScreen"
+                      WindowTransitionsEnabled="false"
+                      ResizeMode="NoResize"
+                      Height="500" 
+                      Width="700">
+    
+    <Window.DataContext>
+        <views:MainViewModel />
+    </Window.DataContext>
+    
+    <controls:MetroWindow.LeftWindowCommands>
+        <controls:WindowCommands>
+            <Button Name="HeaderButtonDEVX" ToolTip="DEVX">
+                <Image Height="14" Source="../Resources/devx_white.png" />
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.LeftWindowCommands>
+    
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button>
+                <StackPanel Name="HeaderDotWarn" Orientation="Horizontal">
+                    <Image Width="16" Height="16" Source="../Resources/dot_yellow.png" />
+                    <TextBlock Name="HeaderDotWarnCount" Margin="2 0 2 0" VerticalAlignment="Center" Text="0" />
+                </StackPanel>
+            </Button>
+            <Button>
+                <StackPanel Name="HeaderDotError" Orientation="Horizontal">
+                    <Image Width="16" Height="16" Source="../Resources/dot_red.png" />
+                    <TextBlock Name="HeaderDotErrorCount" Margin="2 0 2 0" VerticalAlignment="Center" Text="0" />
+                </StackPanel>
+            </Button>
+            <Button>
+                <StackPanel Name="HeaderDotFatal" Orientation="Horizontal">
+                    <Image Width="16" Height="16" Source="../Resources/dot_black.png" />
+                    <TextBlock Name="HeaderDotFatalCount" Margin="2 0 2 0" VerticalAlignment="Center" Text="0" />
+                </StackPanel>
+            </Button>
+            <Button>
+                <StackPanel Orientation="Horizontal">
+                    <Image Name="HeaderIconConnect" Width="20" Height="20" Source="../Resources/icon_connect.png" />
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    
+    <Grid>
+        <Grid.Resources>
+            <utils:SelectedItemToContentConverter x:Key="SelectedItemToContentConverter" />
+            <DataTemplate x:Key="MenuItemTemplate" DataType="{x:Type controls:HamburgerMenuImageItem}">
+                <Grid x:Name="RootGrid"
+                      Height="48"
+                      Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:HamburgerMenu}}, Path=CompactPaneLength}" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="8px"
+                                    Source="{Binding Thumbnail}"
+                                    Focusable="False" />
+                    <TextBlock Grid.Column="1"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               Text="{Binding Label}" />
+                </Grid>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:HamburgerMenu}}, Path=IsPaneOpen}" Value="False">
+                        <Setter TargetName="RootGrid" Property="ToolTip" Value="{Binding ToolTip, Mode=OneWay}" />
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type views:DashboardViewModel}">
+                <views:DashboardView DataContext="{Binding}" />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type views:CrawlerViewModel}">
+                <views:CrawlerView DataContext="{Binding}" />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type views:ConsoleViewModel}">
+                <views:ConsoleView DataContext="{Binding}" />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type views:SettingViewModel}">
+                <views:SettingView DataContext="{Binding}" />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type views:SplashViewModel}">
+                <views:SplashView DataContext="{Binding}" />
+            </DataTemplate>
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <controls:HamburgerMenu 
+            x:Name="MainMenu"
+            DisplayMode="CompactOverlay"
+            IsPaneOpen="False"
+            ItemTemplate="{StaticResource MenuItemTemplate}"
+            ItemsSource="{Binding MenuItems}"
+            OptionsItemTemplate="{StaticResource MenuItemTemplate}"
+            OptionsItemsSource="{Binding MenuOptionItems}"
+            SelectedOptionsIndex="0"
+            HamburgerVisibility="Collapsed"
+            PaneBackground="{DynamicResource AccentColorBrush}">
+
+            <controls:HamburgerMenu.Content>
+                <MultiBinding Converter="{StaticResource SelectedItemToContentConverter}">
+                    <Binding FallbackValue="{x:Null}"
+                             Mode="OneWay"
+                             Path="SelectedItem.Tag"
+                             RelativeSource="{RelativeSource Self}" />
+                    <Binding FallbackValue="{x:Null}"
+                             Mode="OneWay"
+                             Path="SelectedOptionsItem.Tag"
+                             RelativeSource="{RelativeSource Self}" />
+                </MultiBinding>
+            </controls:HamburgerMenu.Content>
+            
+        </controls:HamburgerMenu>
+        
+        <StatusBar Grid.Row="1">
+            <StatusBarItem HorizontalAlignment="Right">PAYMAP VERSION 200525</StatusBarItem>
+        </StatusBar>
+        
+    </Grid>
+    
+</controls:MetroWindow>
