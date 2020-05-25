@@ -99,11 +99,13 @@
             <SubType>Designer</SubType>
         </ApplicationDefinition>
         <Compile Include="CommandManager.cs" />
+        <Compile Include="CrawlManager.cs" />
         <Compile Include="DatabaseManager.cs" />
         <Compile Include="LogManager.cs" />
         <Compile Include="NetworkManager.cs" />
         <Compile Include="ServerManager.cs" />
         <Compile Include="Utils\BootStrapColors.cs" />
+        <Compile Include="Utils\CrawlResultConverter.cs" />
         <Compile Include="Utils\DateTimeFormatter.cs" />
         <Compile Include="Utils\LogLevelConverter.cs" />
         <Compile Include="Utils\PropertyChangedViewModel.cs" />
@@ -133,6 +135,9 @@
           <DependentUpon>SplashView.xaml</DependentUpon>
         </Compile>
         <Compile Include="WindowManager.ConsoleView.cs">
+          <DependentUpon>WindowManager.cs</DependentUpon>
+        </Compile>
+        <Compile Include="WindowManager.CrawlerView.cs">
           <DependentUpon>WindowManager.cs</DependentUpon>
         </Compile>
         <Compile Include="WindowManager.cs" />

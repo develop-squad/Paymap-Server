@@ -9,8 +9,6 @@ namespace PAYMAP_BACKEND
     {
         private static WindowManager _instance;
         
-        private static CrawlerView _crawlerView;
-        
         public static bool IsModuleRunning = false;
         public static bool IsModuleHealthy = false;
 
@@ -53,18 +51,6 @@ namespace PAYMAP_BACKEND
         public static void OnMainWindowClosed()
         {
             App.OnUserTerminate();
-        }
-
-        private static void InitializeCrawlerWindow()
-        {
-            
-        }
-
-
-        public static void SetCrawlerView(CrawlerView crawlerView)
-        {
-            _crawlerView = crawlerView;
-            InitializeCrawlerWindow();
         }
 
     }

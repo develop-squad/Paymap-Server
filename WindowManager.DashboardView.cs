@@ -24,7 +24,7 @@ namespace PAYMAP_BACKEND
         private static TextBlock _dashboardStatusNetwork;
         private static TextBlock _dashboardStatusDatabase;
         private static TextBlock _dashboardStatusServer;
-        private static TextBlock _dashboardStatusWindow;
+        private static TextBlock _dashboardStatusCrawler;
         private static TextBlock _dashboardStatusCommand;
         private static TextBlock _dashboardStatusDEVX;
         private static TextBlock _dashboardRuntimeText;
@@ -64,11 +64,11 @@ namespace PAYMAP_BACKEND
             _dashboardStatusNetwork = (TextBlock) _dashboardView.FindName("DashboardModuleNetworkStatus");
             _dashboardStatusDatabase = (TextBlock) _dashboardView.FindName("DashboardModuleDatabaseStatus");
             _dashboardStatusServer = (TextBlock) _dashboardView.FindName("DashboardModuleServerStatus");
-            _dashboardStatusWindow = (TextBlock) _dashboardView.FindName("DashboardModuleWindowStatus");
+            _dashboardStatusCrawler = (TextBlock) _dashboardView.FindName("DashboardModuleCrawlerStatus");
             _dashboardStatusCommand = (TextBlock) _dashboardView.FindName("DashboardModuleCommandStatus");
             _dashboardStatusDEVX = (TextBlock) _dashboardView.FindName("DashboardModuleDEVXStatus");
             if (_dashboardStatusNetwork == null || _dashboardStatusDatabase == null || _dashboardStatusServer == null || 
-                _dashboardStatusWindow == null || _dashboardStatusCommand == null || _dashboardStatusDEVX == null) return;
+                _dashboardStatusCrawler == null || _dashboardStatusCommand == null || _dashboardStatusDEVX == null) return;
             _dashboardRuntimeText = (TextBlock) _dashboardView.FindName("DashboardRuntimeText");
             _dashboardRuntimeLive = (TextBlock) _dashboardView.FindName("DashboardRuntimeLive");
             _dashboardRuntimeTotal = (TextBlock) _dashboardView.FindName("DashboardRuntimeTotal");
@@ -249,7 +249,7 @@ namespace PAYMAP_BACKEND
                 }
 
                 if (_dashboardStatusNetwork == null || _dashboardStatusDatabase == null || _dashboardStatusServer == null || 
-                    _dashboardStatusWindow == null || _dashboardStatusCommand == null || _dashboardStatusDEVX == null) continue;
+                    _dashboardStatusCrawler == null || _dashboardStatusCommand == null || _dashboardStatusDEVX == null) continue;
                 if (_dashboardRuntimeText == null || _dashboardRuntimeLive == null || _dashboardRuntimeTotal == null || _dashboardRuntimeError == null ||
                     _dashboardRuntimeLog1 == null || _dashboardRuntimeLog2 == null || _dashboardRuntimeLog3 == null || _dashboardRuntimeLog4 == null) continue;
                 if (_dashboardNetworkCount == null || _dashboardNetworkBandwidth == null || _dashboardDatabaseCount == null || _dashboardDatabaseBandwidth == null) continue;
@@ -259,7 +259,7 @@ namespace PAYMAP_BACKEND
                     _dashboardStatusNetwork.Text = NetworkManager.IsModuleRunning ? (NetworkManager.IsModuleHealthy ? "ON" : "ERROR") : "OFF";
                     _dashboardStatusDatabase.Text = DatabaseManager.IsModuleRunning ? (DatabaseManager.IsModuleHealthy ? "ON" : "ERROR") : "OFF";
                     _dashboardStatusServer.Text = ServerManager.IsModuleRunning ? (ServerManager.IsModuleHealthy ? "ON" : "ERROR") : "OFF";
-                    _dashboardStatusWindow.Text = WindowManager.IsModuleRunning ? (WindowManager.IsModuleHealthy ? "ON" : "ERROR") : "OFF";
+                    _dashboardStatusCrawler.Text = CrawlManager.IsModuleRunning ? (CrawlManager.IsModuleHealthy ? "ON" : "ERROR") : "OFF";
                     _dashboardStatusCommand.Text = CommandManager.IsModuleRemoteRunning ? (CommandManager.IsModuleRemoteHealthy ? "ON" : "ERROR") : "OFF";
                     _dashboardStatusDEVX.Text = CommandManager.IsModuleDEVXRunning ? (CommandManager.IsModuleDEVXHealthy ? "ON" : "ERROR") : "OFF";
                     
@@ -269,7 +269,7 @@ namespace PAYMAP_BACKEND
                         (DatabaseManager.IsModuleHealthy ? BootStrapColors.BrushSuccess : BootStrapColors.BrushDanger) : BootStrapColors.BrushDark;
                     _dashboardStatusServer.Foreground = ServerManager.IsModuleRunning ? 
                         (ServerManager.IsModuleHealthy ? BootStrapColors.BrushSuccess : BootStrapColors.BrushDanger) : BootStrapColors.BrushDark;
-                    _dashboardStatusWindow.Foreground = WindowManager.IsModuleRunning ? 
+                    _dashboardStatusCrawler.Foreground = WindowManager.IsModuleRunning ? 
                         (WindowManager.IsModuleHealthy ? BootStrapColors.BrushSuccess : BootStrapColors.BrushDanger) : BootStrapColors.BrushDark;
                     _dashboardStatusCommand.Foreground = CommandManager.IsModuleRemoteRunning ? 
                         (CommandManager.IsModuleRemoteRunning ? BootStrapColors.BrushSuccess : BootStrapColors.BrushDanger) : BootStrapColors.BrushDark;

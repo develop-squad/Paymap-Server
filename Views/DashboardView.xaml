@@ -44,8 +44,8 @@
                     <TextBlock x:Name="DashboardModuleServerStatus" Foreground="{StaticResource BootStrapDarkBrush}" Text="OFF" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Grid.Column="3" Margin="2 4 2 4" HorizontalAlignment="Stretch" Orientation="Vertical">
-                    <TextBlock x:Name="DashboardModuleWindow" Foreground="White" FontSize="16" Text="WINDOW" TextAlignment="Center" HorizontalAlignment="Stretch"/>
-                    <TextBlock x:Name="DashboardModuleWindowStatus" Foreground="{StaticResource BootStrapDarkBrush}" Text="OFF" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="DashboardModuleCrawler" Foreground="White" FontSize="16" Text="CRAWLER" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBlock x:Name="DashboardModuleCrawlerStatus" Foreground="{StaticResource BootStrapDarkBrush}" Text="OFF" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Grid.Column="4" Margin="2 4 2 4" HorizontalAlignment="Stretch" Orientation="Vertical">
                     <TextBlock x:Name="DashboardModuleCommand" Foreground="White" FontSize="16" Text="COMMAND" TextAlignment="Center" HorizontalAlignment="Stretch"/>
