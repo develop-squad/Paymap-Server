@@ -17,6 +17,5 @@
             return _instance ?? (_instance = new ServerManager());
         }
 
-
     }
 }

@@ -132,6 +132,12 @@ namespace PAYMAP_BACKEND
             
             RefreshLogView();
         }
+        
+        public static void SetConsoleView(ConsoleView consoleView)
+        {
+            _consoleView = consoleView;
+            InitializeConsoleWindow();
+        }
 
         private static void OnCommandEnter(object sender, EventArgs args)
         {

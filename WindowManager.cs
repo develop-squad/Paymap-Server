@@ -10,7 +10,6 @@ namespace PAYMAP_BACKEND
         private static WindowManager _instance;
         
         private static CrawlerView _crawlerView;
-        private static SplashView _splashView;
         
         public static bool IsModuleRunning = false;
         public static bool IsModuleHealthy = false;
@@ -61,10 +60,6 @@ namespace PAYMAP_BACKEND
             
         }
 
-        private static void InitializeSplashWindow()
-        {
-            
-        }
 
         public static void SetCrawlerView(CrawlerView crawlerView)
         {
@@ -72,17 +67,5 @@ namespace PAYMAP_BACKEND
             InitializeCrawlerWindow();
         }
 
-        public static void SetConsoleView(ConsoleView consoleView)
-        {
-            _consoleView = consoleView;
-            InitializeConsoleWindow();
-        }
-
-        public static void SetSplashView(SplashView splashView)
-        {
-            _splashView = splashView;
-            InitializeSplashWindow();
-        }
-        
     }
 }

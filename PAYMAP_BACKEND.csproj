@@ -149,6 +149,9 @@
         <Compile Include="WindowManager.SettingView.cs">
           <DependentUpon>WindowManager.cs</DependentUpon>
         </Compile>
+        <Compile Include="WindowManager.SplashView.cs">
+          <DependentUpon>WindowManager.cs</DependentUpon>
+        </Compile>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Properties\AssemblyInfo.cs">
@@ -209,6 +212,18 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <Content Include="Resources\icon_connect_yellow.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Resources\icon_credit_limecake.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Resources\icon_credit_moonjuhan.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Resources\icon_credit_paymap.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Resources\icon_credit_seongbuming.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <Content Include="Resources\icon_dashboard.png">

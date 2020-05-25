@@ -11,14 +11,38 @@
         Height="Auto"
         HorizontalAlignment="Stretch"
         VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <ToggleButton Name="SplashButton" Grid.Row="0" Width="60" Height="60" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
-            <Image Width="48px" HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Resources/icon_connect_black.png"/>
+        <ToggleButton Name="CreditPAYMAP" Grid.Column="2" Grid.Row="1" Width="60" Height="60" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+            <Image Width="48px" HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Resources/icon_credit_paymap.png"/>
         </ToggleButton>
-        <TextBlock Name="SplashStatus" Grid.Row="1" FontSize="14px" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top" Text="CONNECT"/>
+        <TextBlock Grid.Column="2" Grid.Row="2" FontSize="16px" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top" Text="PAY-MAP"/>
+        <TextBlock Grid.Column="2" Grid.Row="3" FontSize="12px" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top" Text="ZeroPay Map Project"/>
+        <ToggleButton Name="CreditMJ" Grid.Column="1" Grid.Row="4" Width="60" Height="60" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+            <Image Width="48px" HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Resources/icon_credit_moonjuhan.png"/>
+        </ToggleButton>
+        <ToggleButton Name="CreditJY" Grid.Column="2" Grid.Row="4" Width="60" Height="60" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+            <Image Width="48px" HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Resources/icon_credit_limecake.png"/>
+        </ToggleButton>
+        <ToggleButton Name="CreditSB" Grid.Column="3" Grid.Row="4" Width="60" Height="60" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+            <Image Width="48px" HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Resources/icon_credit_seongbuming.png"/>
+        </ToggleButton>
+        <TextBlock Grid.Column="1" Grid.Row="5" FontSize="14px" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top" Text="MoonJuHan"/>
+        <TextBlock Grid.Column="2" Grid.Row="5" FontSize="14px" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top" Text="LimeCake"/>
+        <TextBlock Grid.Column="3" Grid.Row="5" FontSize="14px" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Seongbuming"/>
         
     </Grid>
 </UserControl>
