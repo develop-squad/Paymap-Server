@@ -10,15 +10,15 @@ namespace PAYMAP_BACKEND.Utils
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null) return -1;
-            switch ((CrawlManager.CrawlDataResult) value)
+            switch ((CrawlDataResult) value)
             {
-                case CrawlManager.CrawlDataResult.Ready:
+                case CrawlDataResult.Ready:
                     return 0;
-                case CrawlManager.CrawlDataResult.Queue:
+                case CrawlDataResult.Queue:
                     return 1;
-                case CrawlManager.CrawlDataResult.Finish:
+                case CrawlDataResult.Finish:
                     return 2;
-                case CrawlManager.CrawlDataResult.Error:
+                case CrawlDataResult.Error:
                     return 3;
             }
             return -1;

@@ -45,14 +45,14 @@
                     <TextBlock x:Name="CrawlerHeaderTime" Foreground="{StaticResource BootStrapDarkBrush}" Text="00:00:00" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Grid.Column="3" Margin="2 4 2 4" HorizontalAlignment="Stretch" Orientation="Vertical">
-                    <TextBlock Foreground="White" FontSize="14" Text="PAGE CHECKED" TextAlignment="Center" HorizontalAlignment="Stretch"/>
-                    <TextBlock x:Name="CrawlerHeaderPage" Foreground="{StaticResource BootStrapDarkBrush}" Text="0" HorizontalAlignment="Center"/>
+                    <TextBlock Foreground="White" FontSize="14" Text="COUNT FINISHED" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBlock x:Name="CrawlerHeaderCount" Foreground="{StaticResource BootStrapDarkBrush}" Text="0" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Grid>
         </StackPanel>
-        <DataGrid x:Name="CrawlDataView" Grid.Column="0" Grid.Row="1" Margin="4" AutoGenerateColumns="False" HeadersVisibility="All" RowHeaderWidth="20">
+        <DataGrid x:Name="CrawlerDataView" Grid.Column="0" Grid.Row="1" Margin="4" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="All" RowHeaderWidth="20" ItemsSource="{Binding CrawlData}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Result}"
+                <DataGridTextColumn Binding="{Binding Status}"
                                     Header="처리" />
                 <DataGridTextColumn Binding="{Binding Name}"
                                     Header="가맹점명" />
@@ -72,19 +72,23 @@
             <DataGrid.RowStyle>
                 <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding CrawlDataResult, Mode=OneWay, Converter={StaticResource CrawlResultConverter}}" Value="1">
+                        <DataTrigger Binding="{Binding Status, Mode=OneWay, Converter={StaticResource CrawlResultConverter}}" Value="0">
+                            <Setter Property="Background" Value="{StaticResource BootStrapLightBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource BootStrapDarkBrush}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status, Mode=OneWay, Converter={StaticResource CrawlResultConverter}}" Value="1">
                             <Setter Property="Background" Value="{StaticResource BootStrapInfoBrush}" />
                             <Setter Property="Foreground" Value="White" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding CrawlDataResult, Mode=OneWay, Converter={StaticResource CrawlResultConverter}}" Value="2">
+                        <DataTrigger Binding="{Binding Status, Mode=OneWay, Converter={StaticResource CrawlResultConverter}}" Value="2">
                             <Setter Property="Background" Value="{StaticResource BootStrapWarningBrush}" />
                             <Setter Property="Foreground" Value="White" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding CrawlDataResult, Mode=OneWay, Converter={StaticResource CrawlResultConverter}}" Value="3">
+                        <DataTrigger Binding="{Binding Status, Mode=OneWay, Converter={StaticResource CrawlResultConverter}}" Value="3">
                             <Setter Property="Background" Value="{StaticResource BootStrapSuccessBrush}" />
                             <Setter Property="Foreground" Value="White" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding CrawlDataResult, Mode=OneWay, Converter={StaticResource CrawlResultConverter}}" Value="4">
+                        <DataTrigger Binding="{Binding Status, Mode=OneWay, Converter={StaticResource CrawlResultConverter}}" Value="4">
                             <Setter Property="Background" Value="{StaticResource BootStrapDangerBrush}" />
                             <Setter Property="Foreground" Value="White" />
                         </DataTrigger>
@@ -102,68 +106,9 @@
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <CheckBox Name="CrawlerSync" Grid.Column="0" Content="DB SYNC" Margin="4"></CheckBox>
-                <ComboBox Name="CrawlerType1" IsEditable="True" IsReadOnly="True" Text="시도 선택" Grid.Column="1" Grid.Row="0" Margin="4">
-                    <ComboBoxItem Content="서울특별시"/>
-                    <ComboBoxItem Content="부산광역시"/>
-                    <ComboBoxItem Content="울산광역시"/>
-                    <ComboBoxItem Content="인천광역시"/>
-                    <ComboBoxItem Content="대구광역시"/>
-                    <ComboBoxItem Content="대전광역시"/>
-                    <ComboBoxItem Content="광주광역시"/>
-                    <ComboBoxItem Content="경기도"/>
-                    <ComboBoxItem Content="강원도"/>
-                    <ComboBoxItem Content="충청북도"/>
-                    <ComboBoxItem Content="충청남도"/>
-                    <ComboBoxItem Content="경상북도"/>
-                    <ComboBoxItem Content="경상남도"/>
-                    <ComboBoxItem Content="전라북도"/>
-                    <ComboBoxItem Content="전라남도"/>
-                    <ComboBoxItem Content="제주특별자치도"/>
-                    <ComboBoxItem Content="세종특별자치시"/>
-                </ComboBox>
-                <ComboBox Name="CrawlerType2" IsEditable="True" IsReadOnly="True" Text="시군구 선택" Grid.Column="2" Grid.Row="0" Margin="4">
-                </ComboBox>
-                <ComboBox Name="CrawlerType3" IsEditable="True" IsReadOnly="True" Grid.Column="3" Grid.Row="0" Margin="4">
-                    <ComboBoxItem Content="전체"/>
-                    <ComboBoxItem Content="건어물"/>
-                    <ComboBoxItem Content="마트"/>
-                    <ComboBoxItem Content="문구"/>
-                    <ComboBoxItem Content="미용"/>
-                    <ComboBoxItem Content="부동산"/>
-                    <ComboBoxItem Content="분식"/>
-                    <ComboBoxItem Content="생화"/>
-                    <ComboBoxItem Content="생활용품"/>
-                    <ComboBoxItem Content="수산물"/>
-                    <ComboBoxItem Content="슈퍼"/>
-                    <ComboBoxItem Content="식육"/>
-                    <ComboBoxItem Content="안경"/>
-                    <ComboBoxItem Content="약국"/>
-                    <ComboBoxItem Content="양식"/>
-                    <ComboBoxItem Content="어린이집"/>
-                    <ComboBoxItem Content="유통"/>
-                    <ComboBoxItem Content="음식"/>
-                    <ComboBoxItem Content="의류"/>
-                    <ComboBoxItem Content="일식"/>
-                    <ComboBoxItem Content="잡화"/>
-                    <ComboBoxItem Content="전자상거래"/>
-                    <ComboBoxItem Content="정비"/>
-                    <ComboBoxItem Content="제과"/>
-                    <ComboBoxItem Content="주류"/>
-                    <ComboBoxItem Content="주유"/>
-                    <ComboBoxItem Content="중식"/>
-                    <ComboBoxItem Content="치과"/>
-                    <ComboBoxItem Content="치킨"/>
-                    <ComboBoxItem Content="카페"/>
-                    <ComboBoxItem Content="커피"/>
-                    <ComboBoxItem Content="편의점"/>
-                    <ComboBoxItem Content="피자"/>
-                    <ComboBoxItem Content="학원"/>
-                    <ComboBoxItem Content="한식"/>
-                    <ComboBoxItem Content="한의원"/>
-                    <ComboBoxItem Content="호프"/>
-                    <ComboBoxItem Content="화장품"/>
-                    <ComboBoxItem Content="휴게음식"/>
-                </ComboBox>
+                <ComboBox Name="CrawlerType1" IsEditable="True" IsReadOnly="True" Text="시도 선택" Grid.Column="1" Grid.Row="0" Margin="4"></ComboBox>
+                <ComboBox Name="CrawlerType2" IsEditable="True" IsReadOnly="True" Text="시군구 선택" Grid.Column="2" Grid.Row="0" Margin="4"></ComboBox>
+                <ComboBox Name="CrawlerType3" IsEditable="True" IsReadOnly="True" Grid.Column="3" Grid.Row="0" Margin="4"></ComboBox>
                 <TextBox Name="CrawlerType4" Grid.Column="4" Grid.Row="0" Margin="4" Style="{DynamicResource MetroTextBox}"></TextBox>
             </Grid>
         </StackPanel>

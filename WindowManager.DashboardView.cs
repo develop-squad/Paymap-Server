@@ -179,7 +179,7 @@ namespace PAYMAP_BACKEND
 
         public static void StopDashboardMonitor(bool hardOff = false)
         {
-            _dashboardFlagMonitor = true;
+            _dashboardFlagMonitor = false;
             if (!hardOff || _dashboardMonitor == null || !_dashboardMonitor.IsAlive) return;
             try
             {
