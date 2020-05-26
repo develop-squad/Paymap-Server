@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Windows;
+using System.Windows.Threading;
 using PAYMAP_BACKEND.Utils;
 
 namespace PAYMAP_BACKEND
@@ -92,8 +94,11 @@ namespace PAYMAP_BACKEND
         private static void NewAuthorizedLog(Log newLog)
         {
             _logs.AddLast(newLog);
-            WindowManager.UpdateHeaderDot(true, newLog.LogLevel == LogLevel.Warn ? 1 : 0, newLog.LogLevel == LogLevel.Error ? 1 : 0, newLog.LogLevel == LogLevel.Fatal ? 1 : 0);
-            WindowManager.OnLiveLog(newLog);
+            Application.Current.Dispatcher?.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                WindowManager.UpdateHeaderDot(true, newLog.LogLevel == LogLevel.Warn ? 1 : 0, newLog.LogLevel == LogLevel.Error ? 1 : 0, newLog.LogLevel == LogLevel.Fatal ? 1 : 0);
+                WindowManager.OnLiveLog(newLog);
+            }));
         }
 
         public static void NewLog(LogType logType, LogLevel logLevel, string logLocation, string logContent, string logDetail = null)

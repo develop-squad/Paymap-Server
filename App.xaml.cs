@@ -18,12 +18,13 @@ namespace PAYMAP_BACKEND
         private NetworkManager _networkManager;
         private ServerManager _serverManager;
         private WindowManager _windowManager;
+        private CrawlManager _crawlManager;
 
         private void OnStartup(object sender, StartupEventArgs eventArgs)
         {
-            AppDomain.CurrentDomain.UnhandledException += (o, args) => OnGlobalException(args.ExceptionObject == null ? (Exception)args.ExceptionObject : null);
-            DispatcherUnhandledException += (o, args) => OnGlobalException(args.Exception);
-            TaskScheduler.UnobservedTaskException += (o, args) => OnGlobalException(args.Exception);
+            //AppDomain.CurrentDomain.UnhandledException += (o, args) => OnGlobalException(args.ExceptionObject == null ? (Exception)args.ExceptionObject : null);
+            //DispatcherUnhandledException += (o, args) => OnGlobalException(args.Exception);
+            //TaskScheduler.UnobservedTaskException += (o, args) => OnGlobalException(args.Exception);
             
             _commandManager = CommandManager.GetInstance();
             _databaseManager = DatabaseManager.GetInstance();
@@ -31,6 +32,7 @@ namespace PAYMAP_BACKEND
             _networkManager = NetworkManager.GetInstance();
             _serverManager = ServerManager.GetInstance();
             _windowManager = WindowManager.GetInstance();
+            _crawlManager = CrawlManager.GetInstance();
 
             WindowManager.ShowMainWindow();
             //CommandManager.StartCommandServer();
