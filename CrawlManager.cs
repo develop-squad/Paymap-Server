@@ -116,6 +116,17 @@ namespace PAYMAP_BACKEND
                     LogManager.NewLog(LogType.WindowManager, LogLevel.Info, "CrawlZeroPay", "CrawlZeroPay Thread Stop : Safe");
                     break;
                 }
+                
+                if (CrawlingData == null)
+                {
+                    LogManager.NewLog(LogType.WindowManager, LogLevel.Info, "CrawlZeroPay", "CrawlZeroPay Thread Stop : Collection Null");
+                    break;
+                }
+
+                if (CrawlingData.Count > 0)
+                {
+                    
+                }
 
                 if (CrawlingData.Count >= 100)
                 {
@@ -167,6 +178,7 @@ namespace PAYMAP_BACKEND
                         zeroData.Type = zeroObject["bztypName"].Value<string>();
                         string zeroAddress = zeroObject["pobsBaseAddr"].Value<string>();
                         zeroAddress += " " + zeroObject["pobsDtlAddr"].Value<string>();
+                        zeroAddress = zeroAddress.Replace("  ", " ");
                         try
                         {
                             string[] zeroAddressArray = zeroAddress.Split(' ');
