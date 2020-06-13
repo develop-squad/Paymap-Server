@@ -6,3 +6,4 @@ obj/
 out
 gen
 /Constants.cs
+SimpleHttpServer

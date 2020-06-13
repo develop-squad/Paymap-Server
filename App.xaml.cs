@@ -35,6 +35,7 @@ namespace PAYMAP_BACKEND
             _crawlManager = CrawlManager.GetInstance();
 
             WindowManager.ShowMainWindow();
+            DatabaseManager.GetInstance().StartDatabase();
             //CommandManager.StartCommandServer();
             //CommandManager.ConnectMasterServer();
         }

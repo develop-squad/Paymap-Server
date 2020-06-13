@@ -20,13 +20,18 @@ namespace PAYMAP_BACKEND
     }
         
     // ReSharper disable UnusedAutoPropertyAccessor.Global
-    public struct CrawlData
+    public class CrawlData
     {
         public string Name { get; set; }
         public string AddressSiDo { get; set; }
         public string AddressSiGunGu { get; set; }
         public string Address { get; set; }
         public string Type { get; set; }
+
+        public int CodeSido;
+
+        public int CodeSigungu;
+        
         public CrawlDataResult Status { get; set; }
     }
     
@@ -125,18 +130,49 @@ namespace PAYMAP_BACKEND
 
                 if (CrawlingData.Count > 0)
                 {
-                    
+                    for (int i = 0; i < CrawlingData.Count; i ++)
+                    {
+                        CrawlData data = CrawlingData[i];
+                        if (data.Status == CrawlDataResult.Finish)
+                        {
+                            continue;
+                        }
+                        if (data.Status == CrawlDataResult.Error || data.Status == CrawlDataResult.Queue)
+                        {
+                            continue;
+                        }
+
+                        data.Status = CrawlDataResult.Queue;
+                        if (DatabaseManager.GetInstance().InsertShop(data))
+                        {
+                            CrawlingData[i].Status = CrawlDataResult.Finish;
+                        }
+                        else
+                        {
+                            CrawlingData[i].Status = CrawlDataResult.Error;
+                            return;
+                        }
+                    }
+                    for (int i = 0; i < CrawlingData.Count; i ++)
+                    {
+                        CrawlData data = CrawlingData[i];
+                        if (data.Status == CrawlDataResult.Finish)
+                        {
+                            CrawlingData.RemoveAt(i);
+                            i--;
+                        }
+                    }
                 }
 
                 if (CrawlingData.Count >= 100)
                 {
                     // TODO REFRESH HOLDING DATA STATUS
                     LogManager.NewLog(LogType.WindowManager, LogLevel.Info, "CrawlZeroPay", "CrawlZeroPay Parse Limit");
-                    break;
+                    continue;
                 }
 
                 string requestURL = $"https://www.zeropay.or.kr/intro/frncSrchList_json.do?firstIndex={pointerIndex}&lastIndex={pointerIndex+9}&searchCondition=&tryCode={FilterSiDo:00}";
-                if (FilterSiGunGu != 0) requestURL += $"&skkCode={FilterSiGunGu}";
+                if (FilterSiGunGu != 0) requestURL += $"&skkCode={FilterSiGunGu:00}";
                 if (FilterType != null && FilterType.Equals(string.Empty)) requestURL += $"&bztypName={FilterType}";
                 if (FilterName != null && FilterName.Equals(string.Empty)) requestURL += $"&pobsAfstrName={FilterName}";
                 var webResult = crawlerClient.DownloadString(requestURL);
@@ -192,6 +228,8 @@ namespace PAYMAP_BACKEND
                             zeroData.AddressSiGunGu = string.Empty;
                             zeroData.Address = zeroAddress;
                         }
+                        zeroData.CodeSido = GetCodeBySido(zeroData.AddressSiDo);
+                        zeroData.CodeSigungu = GetCodeBySigungu(zeroData.CodeSido, zeroData.AddressSiGunGu);
                         zeroData.Status = CrawlDataResult.Ready;
                         CrawlingData.Add(zeroData);
                     }
@@ -208,7 +246,132 @@ namespace PAYMAP_BACKEND
                 Application.Current.Dispatcher?.BeginInvoke(DispatcherPriority.Normal, new Action(WindowManager.UpdateCrawlData));
             }
         }
-        
+
+        public static int GetCodeBySido(string sido)
+        {
+            if (sido == null || sido.Trim().Length == 0) return 0;
+            // CHECK 1 = PERFECT EQUALISM
+            foreach (var sidoData in SiDoDictionary)
+            {
+                if (sidoData.Key.Trim().Equals(sido.Trim()))
+                {
+                    return sidoData.Value;
+                }
+            }
+            // CHECK 2 = EQUALISM WITHOUT TAG
+            foreach (var sidoData in SiDoDictionary)
+            {
+                string pureKey = sidoData.Key
+                    .Replace("특별시", "")
+                    .Replace("광역시", "")
+                    .Replace("특별자치도", "도")
+                    .Replace("특별자치시", "시");
+                if (pureKey.EndsWith("시")) pureKey = pureKey.Substring(0, pureKey.Length - 1);
+                if (pureKey.EndsWith("도")) pureKey = pureKey.Substring(0, pureKey.Length - 1);
+                string pureInput = sido
+                    .Replace("특별시", "")
+                    .Replace("광역시", "")
+                    .Replace("특별자치도", "도")
+                    .Replace("특별자치시", "시");
+                if (pureInput.EndsWith("시")) pureInput = pureInput.Substring(0, pureInput.Length - 1);
+                if (pureInput.EndsWith("도")) pureInput = pureInput.Substring(0, pureInput.Length - 1);
+                if (pureKey.Trim().Equals(pureInput.Trim()))
+                {
+                    return sidoData.Value;
+                }
+            }
+            // CHECK 3 = CONTAINING CHECK
+            foreach (var sidoData in SiDoDictionary)
+            {
+                string pureKey = sidoData.Key
+                    .Replace("특별시", "")
+                    .Replace("광역시", "")
+                    .Replace("특별자치도", "도")
+                    .Replace("특별자치시", "시");
+                if (pureKey.EndsWith("시")) pureKey = pureKey.Substring(0, pureKey.Length - 1);
+                if (pureKey.EndsWith("도")) pureKey = pureKey.Substring(0, pureKey.Length - 1);
+                string pureInput = sido
+                    .Replace("특별시", "")
+                    .Replace("광역시", "")
+                    .Replace("특별자치도", "도")
+                    .Replace("특별자치시", "시");
+                if (pureInput.EndsWith("시")) pureInput = pureInput.Substring(0, pureInput.Length - 1);
+                if (pureInput.EndsWith("도")) pureInput = pureInput.Substring(0, pureInput.Length - 1);
+                if (pureKey.Trim().Contains(pureInput.Trim()))
+                {
+                    return sidoData.Value;
+                }
+                if (pureInput.Trim().Contains(pureKey.Trim()))
+                {
+                    return sidoData.Value;
+                }
+            }
+            return 0;
+        }
+
+        public static int GetCodeBySigungu(int sido, string sigungu)
+        {
+            if (sigungu == null || sigungu.Trim().Length == 0) return 0;
+            if (sido == 0 || sido > SiGunGuDictionary.Count) return 0;
+            // CHECK 1 = PERFECT EQUALISM
+            foreach (var sigunguData in SiGunGuDictionary[sido])
+            {
+                if (sigunguData.Key.Trim().Equals(sigungu.Trim()))
+                {
+                    return sigunguData.Value;
+                }
+            }
+            // CHECK 2 = EQUALISM WITHOUT TAG
+            foreach (var sigunguData in SiGunGuDictionary[sido])
+            {
+                string pureKey = sigunguData.Key
+                    .Replace("특별시", "")
+                    .Replace("광역시", "")
+                    .Replace("특별자치도", "도")
+                    .Replace("특별자치시", "시");
+                if (pureKey.EndsWith("시")) pureKey = pureKey.Substring(0, pureKey.Length - 1);
+                if (pureKey.EndsWith("도")) pureKey = pureKey.Substring(0, pureKey.Length - 1);
+                string pureInput = sigungu
+                    .Replace("특별시", "")
+                    .Replace("광역시", "")
+                    .Replace("특별자치도", "도")
+                    .Replace("특별자치시", "시");
+                if (pureInput.EndsWith("시")) pureInput = pureInput.Substring(0, pureInput.Length - 1);
+                if (pureInput.EndsWith("도")) pureInput = pureInput.Substring(0, pureInput.Length - 1);
+                if (pureKey.Trim().Equals(pureInput.Trim()))
+                {
+                    return sigunguData.Value;
+                }
+            }
+            // CHECK 3 = CONTAINING CHECK
+            foreach (var sigunguData in SiGunGuDictionary[sido])
+            {
+                string pureKey = sigunguData.Key
+                    .Replace("특별시", "")
+                    .Replace("광역시", "")
+                    .Replace("특별자치도", "도")
+                    .Replace("특별자치시", "시");
+                if (pureKey.EndsWith("시")) pureKey = pureKey.Substring(0, pureKey.Length - 1);
+                if (pureKey.EndsWith("도")) pureKey = pureKey.Substring(0, pureKey.Length - 1);
+                string pureInput = sigungu
+                    .Replace("특별시", "")
+                    .Replace("광역시", "")
+                    .Replace("특별자치도", "도")
+                    .Replace("특별자치시", "시");
+                if (pureInput.EndsWith("시")) pureInput = pureInput.Substring(0, pureInput.Length - 1);
+                if (pureInput.EndsWith("도")) pureInput = pureInput.Substring(0, pureInput.Length - 1);
+                if (pureKey.Trim().Contains(pureInput.Trim()))
+                {
+                    return sigunguData.Value;
+                }
+                if (pureInput.Trim().Contains(pureKey.Trim()))
+                {
+                    return sigunguData.Value;
+                }
+            }
+            return 0;
+        }
+
         public static void InitializeZeroPayData()
         {
             SiDoDictionary.Add("서울특별시", 1);

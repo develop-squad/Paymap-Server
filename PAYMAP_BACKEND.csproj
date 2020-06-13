@@ -159,9 +159,18 @@
         <Compile Include="Constants.cs" />
         <Compile Include="CrawlManager.cs" />
         <Compile Include="DatabaseManager.cs" />
+        <Compile Include="Data\Shop.cs" />
         <Compile Include="LogManager.cs" />
         <Compile Include="NetworkManager.cs" />
         <Compile Include="ServerManager.cs" />
+        <Compile Include="SimpleHttpServer\HttpBuilder.cs" />
+        <Compile Include="SimpleHttpServer\HttpProcessor.cs" />
+        <Compile Include="SimpleHttpServer\HttpServer.cs" />
+        <Compile Include="SimpleHttpServer\Models\HttpRequest.cs" />
+        <Compile Include="SimpleHttpServer\Models\HttpResponse.cs" />
+        <Compile Include="SimpleHttpServer\Models\Route.cs" />
+        <Compile Include="SimpleHttpServer\Properties\AssemblyInfo.cs" />
+        <Compile Include="SimpleHttpServer\RouteHandlers\FileSystemRouteHandler.cs" />
         <Compile Include="Utils\BootStrapColors.cs" />
         <Compile Include="Utils\CrawlResultConverter.cs" />
         <Compile Include="Utils\DateTimeFormatter.cs" />
@@ -235,6 +244,8 @@
           <DependentUpon>App.xaml</DependentUpon>
         </None>
         <None Include="packages.config" />
+        <None Include="SimpleHttpServer\app.config" />
+        <None Include="SimpleHttpServer\packages.config" />
     </ItemGroup>
     <ItemGroup>
       <Content Include=".gitignore" />
@@ -331,6 +342,10 @@
       <Content Include="Resources\icon_zeropay_white.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Content Include="SimpleHttpServer\Resources\Pages\404.html" />
+      <Content Include="SimpleHttpServer\Resources\Pages\500.html" />
+      <Content Include="SimpleHttpServer\SimpleHttpServer.csproj" />
+      <Content Include="SimpleHttpServer\SimpleHttpServer.csproj.user" />
       <Page Include="Views\ConsoleView.xaml" />
       <Page Include="Views\DashboardView.xaml" />
       <Page Include="Views\CrawlerView.xaml" />
