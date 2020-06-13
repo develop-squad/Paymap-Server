@@ -120,11 +120,15 @@
           <HintPath>packages\System.Memory.4.5.3\lib\netstandard1.1\System.Memory.dll</HintPath>
           <Private>True</Private>
         </Reference>
+        <Reference Include="System.Net" />
+        <Reference Include="System.Net.Http" />
+        <Reference Include="System.Net.Http.WebRequest" />
         <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
           <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.6.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
           <Private>True</Private>
         </Reference>
         <Reference Include="System.Transactions" />
+        <Reference Include="System.Web" />
         <Reference Include="System.Windows.Forms" />
         <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
           <HintPath>packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -163,14 +167,6 @@
         <Compile Include="LogManager.cs" />
         <Compile Include="NetworkManager.cs" />
         <Compile Include="ServerManager.cs" />
-        <Compile Include="SimpleHttpServer\HttpBuilder.cs" />
-        <Compile Include="SimpleHttpServer\HttpProcessor.cs" />
-        <Compile Include="SimpleHttpServer\HttpServer.cs" />
-        <Compile Include="SimpleHttpServer\Models\HttpRequest.cs" />
-        <Compile Include="SimpleHttpServer\Models\HttpResponse.cs" />
-        <Compile Include="SimpleHttpServer\Models\Route.cs" />
-        <Compile Include="SimpleHttpServer\Properties\AssemblyInfo.cs" />
-        <Compile Include="SimpleHttpServer\RouteHandlers\FileSystemRouteHandler.cs" />
         <Compile Include="Utils\BootStrapColors.cs" />
         <Compile Include="Utils\CrawlResultConverter.cs" />
         <Compile Include="Utils\DateTimeFormatter.cs" />
@@ -244,8 +240,6 @@
           <DependentUpon>App.xaml</DependentUpon>
         </None>
         <None Include="packages.config" />
-        <None Include="SimpleHttpServer\app.config" />
-        <None Include="SimpleHttpServer\packages.config" />
     </ItemGroup>
     <ItemGroup>
       <Content Include=".gitignore" />
@@ -342,10 +336,6 @@
       <Content Include="Resources\icon_zeropay_white.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="SimpleHttpServer\Resources\Pages\404.html" />
-      <Content Include="SimpleHttpServer\Resources\Pages\500.html" />
-      <Content Include="SimpleHttpServer\SimpleHttpServer.csproj" />
-      <Content Include="SimpleHttpServer\SimpleHttpServer.csproj.user" />
       <Page Include="Views\ConsoleView.xaml" />
       <Page Include="Views\DashboardView.xaml" />
       <Page Include="Views\CrawlerView.xaml" />

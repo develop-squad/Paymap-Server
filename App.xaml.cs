@@ -36,6 +36,7 @@ namespace PAYMAP_BACKEND
 
             WindowManager.ShowMainWindow();
             DatabaseManager.GetInstance().StartDatabase();
+            ServerManager.GetInstance().StartWebServer();
             //CommandManager.StartCommandServer();
             //CommandManager.ConnectMasterServer();
         }

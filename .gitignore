@@ -7,3 +7,4 @@ out
 gen
 /Constants.cs
 SimpleHttpServer
+/TinyWeb

@@ -36,7 +36,7 @@ namespace PAYMAP_BACKEND
         {
             if (_commandWebSocketServer == null)
             {
-                _commandWebSocketServer = new WebSocketServer(9982);
+                _commandWebSocketServer = new WebSocketServer(9981);
                 _commandWebSocketServer.AddWebSocketService<RemoteCommand>("/RemoteCommand");
             }
             _commandWebSocketServer.Start();
