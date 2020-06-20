@@ -134,7 +134,7 @@
         </controls:HamburgerMenu>
         
         <StatusBar Grid.Row="1">
-            <StatusBarItem HorizontalAlignment="Right">PAYMAP VERSION 200525</StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">PAYMAP VERSION 200621A</StatusBarItem>
         </StatusBar>
         
     </Grid>

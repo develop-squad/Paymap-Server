@@ -6,6 +6,8 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Web;
+using Newtonsoft.Json.Linq;
+using Org.BouncyCastle.Utilities;
 
 namespace PAYMAP_BACKEND
 {
@@ -31,9 +33,9 @@ namespace PAYMAP_BACKEND
 
         public void StartWebServer()
         {
-           webServerGeocode = new WebServer(GeocodeResponse, "http://localhost:9991/geocode/");
+           webServerGeocode = new WebServer(GeocodeResponse, "http://devx.kr:9991/geocode/");
            webServerGeocode.Run();
-           webServerZeroPay = new WebServer(ZeroPayResponse, "http://localhost:9991/zeropay/");
+           webServerZeroPay = new WebServer(ZeroPayResponse, "http://devx.kr:9991/zeropay/");
            webServerZeroPay.Run();
         }
 
@@ -47,9 +49,9 @@ namespace PAYMAP_BACKEND
         {
            NameValueCollection queryCollection = HttpUtility.ParseQueryString(request.Url.Query);
            string inputId = queryCollection.Get("id");
-           if (inputId == null || inputId.Equals(String.Empty)) inputId = "i0xvdqsm01";
+           if (inputId == null || inputId.Equals(String.Empty)) inputId = Constants.NAVER_SB_ID;
            string inputKey = queryCollection.Get("key");
-           if (inputKey == null || inputKey.Equals(String.Empty)) inputKey = "SE6qmbIMlBhDIG8HhzdLqL0e4OfxFtqSB3NrUnvM";
+           if (inputKey == null || inputKey.Equals(String.Empty)) inputKey = Constants.NAVER_SB_KEY;
            string inputAddress = queryCollection.Get("address");
            string inputCoordinate = queryCollection.Get("coordinate");
            string requestURL = $"https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query={inputAddress}&coordinate={inputCoordinate}";
@@ -70,8 +72,12 @@ namespace PAYMAP_BACKEND
            string inputAddress = queryCollection.Get("address");
            string inputName = queryCollection.Get("name");
            string inputType = queryCollection.Get("type");
+           string inputMax = queryCollection.Get("max");
+           if (inputMax == null || inputMax.Equals(String.Empty)) inputMax = "1000";
+
+           JArray zeroResult = DatabaseManager.GetInstance().SearchShop(int.Parse(inputSido), int.Parse(inputSigungu), inputAddress, inputName, inputType, int.Parse(inputMax));
            
-           return "";
+           return zeroResult.ToString();
         }
 
     }

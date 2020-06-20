@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Data;
 using System.Threading;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json.Linq;
 using PAYMAP_BACKEND.Data;
 
 namespace PAYMAP_BACKEND
@@ -169,6 +171,59 @@ namespace PAYMAP_BACKEND
 			{
 				LogManager.NewLog(LogType.DatabaseManager, LogLevel.Error, "InsertShop", e);
 				return false;
+			}
+		}
+		
+		public JArray SearchShop(int sido, int sigungu, string _address, string _name, string _type, int max)
+		{
+			try
+			{
+				lock (dbConnection)
+				{
+					using (dbConnection = new MySqlConnection("SERVER=devx.kr;DATABASE=paymap;UID=" + Constants.DB_ACCOUNT + ";PASSWORD=" + Constants.DB_PASSWORD + ";Charset=utf8"))
+					{
+						dbConnection.Open();
+						using (MySqlCommand shopSearchCommand = dbConnection.CreateCommand())
+						{
+							if (max > 1000) max = 1000;
+							string address = "", name = "", type = "";
+							JArray shopArray = new JArray();
+							if (!string.IsNullOrEmpty(_address)) address = MySqlHelper.EscapeString(_address);
+							if (!string.IsNullOrEmpty(_name)) name = MySqlHelper.EscapeString(_name);
+							if (!string.IsNullOrEmpty(_type)) type = MySqlHelper.EscapeString(_type);
+							shopSearchCommand.CommandText = $"SELECT * FROM `shop` WHERE `shop_sido` = {sido} AND `shop_sigungu` = {sigungu} AND `shop_address` LIKE '{address}%' AND `shop_name` LIKE '%{name}%' AND `shop_type` LIKE '%{type}%' LIMIT {max}";
+							using (MySqlDataReader dataReader = shopSearchCommand.ExecuteReader())
+							{
+								while (dataReader.Read())
+								{
+									JObject shopObject = new JObject();
+									int shop_index = dataReader.GetInt32(dataReader.GetOrdinal("shop_index"));
+									string shop_name = dataReader.GetString(dataReader.GetOrdinal("shop_name"));
+									int shop_sido = dataReader.GetInt32(dataReader.GetOrdinal("shop_sido"));
+									int shop_sigungu = dataReader.GetInt32(dataReader.GetOrdinal("shop_sigungu"));
+									string shop_address = dataReader.GetString(dataReader.GetOrdinal("shop_address"));
+									string shop_type = dataReader.GetString(dataReader.GetOrdinal("shop_type"));
+									shopObject.Add("shop_index", shop_index);
+									shopObject.Add("shop_name", shop_name);
+									shopObject.Add("shop_sido", shop_sido);
+									shopObject.Add("shop_sigungu", shop_sigungu);
+									shopObject.Add("shop_address", shop_address);
+									shopObject.Add("shop_type", shop_type);
+									shopArray.Add(shopObject);
+								}
+								dataReader.Close();
+							}
+
+							return shopArray;
+						}
+					}
+				}
+				return null;
+			}
+			catch (Exception e)
+			{
+				LogManager.NewLog(LogType.DatabaseManager, LogLevel.Error, "SearchShop", e);
+				return null;
 			}
 		}
         

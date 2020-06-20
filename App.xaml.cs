@@ -46,6 +46,8 @@ namespace PAYMAP_BACKEND
             WindowManager.HideMainWindow();
             CommandManager.DisconnectMasterServer();
             CommandManager.StopCommandServer();
+            DatabaseManager.GetInstance().StopDatabase();
+            ServerManager.GetInstance().StopWebServer();
         }
 
         private void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs args)
