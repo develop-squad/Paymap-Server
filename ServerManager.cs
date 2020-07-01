@@ -139,6 +139,10 @@ namespace PAYMAP_BACKEND
                         
                         var rstr = _responderMethod(ctx.Request);
                         var buf = Encoding.Default.GetBytes(rstr);
+                        ctx.Response.Headers["Access-Control-Allow-Origin"] = "*";
+                        ctx.Response.Headers["Access-Control-Allow-Headers"] = "Content-Type";
+                        ctx.Response.Headers["Access-Control-Allow-Methods"] = "GET,POST,PUT,DELETE,OPTIONS";
+                        ctx.Response.Headers["Access-Control-Allow-Credentials"] = "true";
                         ctx.Response.ContentLength64 = buf.Length;
                         ctx.Response.OutputStream.Write(buf, 0, buf.Length);
                         ctx.Response.ContentEncoding = Encoding.UTF8;
