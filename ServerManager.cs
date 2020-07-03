@@ -52,14 +52,51 @@ namespace PAYMAP_BACKEND
            if (inputId == null || inputId.Equals(String.Empty)) inputId = Constants.NAVER_SB_ID;
            string inputKey = queryCollection.Get("key");
            if (inputKey == null || inputKey.Equals(String.Empty)) inputKey = Constants.NAVER_SB_KEY;
+           string[] inputAddressArray;
            string inputAddress = queryCollection.Get("address");
+           if (inputAddress == null || inputAddress.Equals(String.Empty)) inputAddress = "";
+           inputAddressArray = inputAddress.Split('|');
            string inputCoordinate = queryCollection.Get("coordinate");
-           string requestURL = $"https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query={inputAddress}&coordinate={inputCoordinate}";
+           if (inputCoordinate == null || inputCoordinate.Equals(String.Empty)) inputCoordinate = "";
+
+           string[] headerId;
+           string[] headerKey;
+           string[] headerAddress;
+           string[] headerCoordinate;
+           headerId = request.Headers.GetValues("id");
+           if (headerId != null && headerId.Length > 0)
+           {
+              inputId = headerId[0];
+           }
+           headerKey = request.Headers.GetValues("key");
+           if (headerKey != null && headerKey.Length > 0)
+           {
+              inputKey = headerKey[0];
+           }
+           headerAddress = request.Headers.GetValues("address");
+           if (headerAddress != null && headerAddress.Length > 0)
+           {
+              inputAddressArray = headerAddress;
+           }
+           headerCoordinate = request.Headers.GetValues("coordinate");
+           if (headerCoordinate != null && headerCoordinate.Length > 0)
+           {
+              inputCoordinate = headerCoordinate[0];
+           }
+
+           JArray naverGeocodeResultArray = new JArray();
            WebClient naverGeocodeClient = new WebClient {Encoding = Encoding.UTF8};
            naverGeocodeClient.Headers.Add("X-NCP-APIGW-API-KEY-ID", inputId);
            naverGeocodeClient.Headers.Add("X-NCP-APIGW-API-KEY", inputKey);
-           String naverGeocodeResult = naverGeocodeClient.DownloadString(requestURL);
-           return naverGeocodeResult;
+
+           for (int i = 0; i < inputAddressArray.Length; i ++)
+           {
+              string requestURL = $"https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query={inputAddressArray[i]}&coordinate={inputCoordinate}";
+              JObject resultObject = JObject.Parse(naverGeocodeClient.DownloadString(requestURL));
+              naverGeocodeResultArray.Add(resultObject);
+           }
+
+           return naverGeocodeResultArray.ToString();
         }
         
         public static string ZeroPayResponse(HttpListenerRequest request)
